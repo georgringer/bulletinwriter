@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Bootstrap, from Twitter</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<!-- Le styles -->
+	<link href="css/bootstrap.css" rel="stylesheet">
+	<link href="css/app.css" rel="stylesheet">
+	<link href="css/bootstrap-responsive.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar-inner">
+		<div class="container">
+			<span class="brand" href="#">Bulletin writer</span>
+
+		</div>
+	</div>
+</div>
+
+<div class="container">
+
+	<div class="row">
+
+		<div class="span6">
+			<h1>Bulletin writer</h1>
+
+			<p>This is a simple start to write TYPO3 bulletins</p>
+
+			<h3>Form</h3>
+
+			<form class="form-horizontal" id="form" method="post">
+				<div class="control-group">
+					<div class="controls">
+						<button type="submit" class="btn">Generate</button>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="title">Title</label>
+
+					<div class="controls">
+						<input type="text" id="title" name="title" class="input-xlarge" required>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="csb">Type</label>
+
+					<div class="controls">
+						<label class="radio">
+							<input type="radio" name="type" id="csb" value="csb" checked>
+							CSB
+						</label>
+						<label class="radio">
+							<input type="radio" name="type" id="isb" value="isb">
+							ISB
+						</label>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="author">Author(s)</label>
+
+					<div class="controls">
+						<input type="text" id="author" name="author" class="input-xlarge">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="author">Date</label>
+
+					<div class="controls">
+						<input type="date" id="date" name="date" required>
+					</div>
+				</div>
+				<hr />
+
+				<div id="reports">
+
+				</div>
+
+				<span class="btn btn-info" id="add-report">Add a report</span>
+
+				<div class="control-group">
+					<hr />
+					<div class="controls">
+						<button type="submit" class="btn">Generate</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="span6">
+			<div id="result"></div>
+		</div>
+	</div>
+
+	<div style="display: none">
+		<fieldset id="form-fields">
+			<legend>Report #<span class="count">X</span>
+
+				<div class="pull-right delete">X</div>
+			</legend>
+			<div class="control-group">
+				<label class="control-label" for="reportXkey">Extension Key</label>
+
+				<div class="controls">
+					<input type="text" id="reportXkey" name="report[1][key]" required>
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label" for="reportXaffected">Affected version</label>
+
+				<div class="controls form-inline">
+					<input type="text" id="reportXaffected" name="report[1][affectedVersion]" class="input-small" required>
+
+					<label class="checkbox">
+						<input type="checkbox" id="reportXaffected-below" name="report[1][affectedVersionBelow]">
+						+ affected below
+					</label>
+
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label" for="reportXtype">Vulnerability Type</label>
+
+				<div class="controls">
+					<select id="reportXtype" name="report[1][type][]" multiple required>
+						<option value="Arbitrary Code Execution">Arbitrary Code Execution</option>
+						<option value="SQL Injection">SQL Injection</option>
+						<option value="Priviledge Escalation">Priviledge Escalation</option>
+						<option value="File Disclosure">File Disclosure</option>
+						<option value="XSS">XSS</option>
+						<option value="Open Redirection">Open Redirection</option>
+						<option value="Cross Site Request Forgery">Cross Site Request Forgery</option>
+						<option value=""></option>
+					</select>
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label" for="reportXseverity">Severity</label>
+
+				<div class="controls">
+					<select id="reportXseverity" name="report[1][severity]">
+						<option value="High">High</option>
+						<option value="Medium">Medium</option>
+						<option value="low">Low</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label" for="reportXcvss">CVSS</label>
+
+				<div class="controls">
+					<input type="text" id="reportXcvss" name="report[1][cvss]">
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label" for="reportXsolution">Solution</label>
+
+				<div class="controls">
+					<select id="reportXsolution" name="report[1][solution]" required>
+						<option></option>
+						<option value="noresponse">No response from author => removal</option>
+						<option value="nosupport">No support => removal</option>
+						<option value="update">Update</option>
+					</select>
+
+					<label class="checkbox inline"> Version with fix:
+						<input type="text" id="reportXsolution-version" name="report[1][solutionVersion]" class="input-small">
+					</label>
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label" for="reportXcredits">Credits</label>
+
+				<div class="controls">
+					<input type="text" id="reportXcredits" name="report[1][credits]">
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label" for="reportXadditional">Additional information</label>
+
+				<div class="controls">
+					<textarea id="reportXadditional" name="report[1][additional]"></textarea>
+				</div>
+			</div>
+		</fieldset>
+	</div>
+
+	<footer>
+		2013 &copy; Georg Ringer &middot; <a href="http://www.cyberhouse.at" target="_blank">Cyberhouse GmbH</a>
+	</footer>
+</div>
+
+<script src="js/jquery.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
